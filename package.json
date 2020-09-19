@@ -1,0 +1,25 @@
+{
+  "name": "calculator",
+  "version": "1.0.0",
+  "description": "calculator",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agustinamestre/Calculator.git"
+  },
+  "author": "agustina mestre",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agustinamestre/Calculator/issues"
+  },
+  "homepage": "https://github.com/agustinamestre/Calculator#readme",
+  "devDependencies": {
+    "jest": "^26.4.2"
+  },
+  "dependencies": {
+    "sass": "^1.26.10"
+  }
+}
