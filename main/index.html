@@ -1,50 +1,44 @@
 <!DOCTYPE html>
-<html>
 
 <head>
-  <title>Calculator</title>
+  <title>JavaScript Calculator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="./styles/style.css">
 </head>
 
 <body>
-  <div class="container">
-    <div class="screen">
-      <div class="result"></div>
+  <div class="calculator">
+    <div class="calculator-display">
+      <span id="calculator-output"></span>
     </div>
-    <div class="keys">
-      <div class="numbers">
-        <div>
-          <button id="number7">7</button>
-          <button id="number8">8</button>
-          <button id="number9">9</button>
-        </div>
-        <div>
-          <button id="number4">4</button>
-          <button id="number5">5</button>
-          <button id="number6">6</button>
-        </div>
-        <div>
-          <button id="number1">1</button>
-          <button id="number2">2</button>
-          <button id="number3">3</button>
-        </div>
-        <div>
-          <button id="dot">.</button>
-          <button id="number">0</button>
-          <button id="delete">C</button>
-        </div>
+    <div class="calculator-keyboard">
+      <div class="calculator-row">
+        <button class="calculator-key operator" id="allClear">AC</button><button class="calculator-key operator"
+          id="clear">C</button><button class="calculator-key operator" id="div">÷</button>
       </div>
-      <div class="btn-operations">
-        <button id="div">÷</button>
-        <button id="mult">*</button>
-        <button id="sub">-</button>
-        <button id="sum">+</button>
+      <div class="calculator-row">
+        <button class="calculator-key number" id="7">7</button><button class="calculator-key number"
+          id="8">8</button><button class="calculator-key number" id="9">9</button><button
+          class="calculator-key operator" id="mult">x</button>
       </div>
-    </div>
-    <div class="btn-equal">
-      <button id="equal">=</button>
+      <div class="calculator-row">
+        <button class="calculator-key number" id="4">4</button><button class="calculator-key number"
+          id="5">5</button><button class="calculator-key number" id="6">6</button><button
+          class="calculator-key operator" id="sub">-</button>
+      </div>
+      <div class="calculator-row">
+        <button class="calculator-key number" id="1">1</button><button class="calculator-key number"
+          id="2">2</button><button class="calculator-key number" id="3">3</button><button
+          class="calculator-key operator" id="plus">+</button>
+      </div>
+      <div class="calculator-row">
+        <button class="calculator-key number zero" id="0">0</button><button class="calculator-key operator"
+          id="dot">.</button><button class="calculator-key operator" id="equal">=</button>
+      </div>
     </div>
   </div>
+  <script src="./scripts/main.js"></script>
 </body>
 
 </html>
