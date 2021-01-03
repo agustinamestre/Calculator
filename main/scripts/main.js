@@ -6,9 +6,11 @@ const clearLastValue = document.getElementById("clear");
 const numbers = [];
 const operations = ["div", "mult", "sub", "plus"];
 
-let leftOperand = 0;
-let rightOperand = 0;
-let operator = null;
+const state = {
+  leftOperand: 0,
+  rightOperand: 0,
+  operator: null
+};
 
 for (let i = 0; i <= 9; i++) {
   numbers.push(i);
@@ -16,27 +18,24 @@ for (let i = 0; i <= 9; i++) {
 
 const allowMoreOperations = () => !(document.getElementById("calculator-output").innerHTML === "Error")
 
-document.getElementById("dot").addEventListener("click", dot => {
-  if (allowMoreOperations()) {
-    result.innerHTML = result.innerHTML + dot.target.innerHTML;
+const isOperatorPressed = () => state.operator
+
+const trackNumberPressed = (operatorKeyName, pressedNumber) => {
+  if (state[operatorKeyName] === 0) {
+    state[operatorKeyName] = pressedNumber;
+  } else {
+    state[operatorKeyName] += pressedNumber;
   }
-})
+}
 
 numbers.forEach(n => {
   document.getElementById(n).addEventListener("click", (ev) => {
     if (allowMoreOperations()) {
+      const operandKeyName = isOperatorPressed() ? 'rightOperand' : 'leftOperand';
+      trackNumberPressed(operandKeyName, ev.target.innerHTML);
       result.innerHTML = result.innerHTML + (ev.target.innerHTML);
-      if (!operator) {
-        if (leftOperand === 0) {
-          leftOperand = ev.target.innerHTML;
-        } else {
-          leftOperand += ev.target.innerHTML;
-        }
-      } else {
-        rightOperand += ev.target.innerHTML;
-      }
     }
-  });
+  })
 })
 
 operations.forEach(o => {
@@ -44,20 +43,31 @@ operations.forEach(o => {
     if (allowMoreOperations()) {
       result.innerHTML = result.innerHTML + ev.target.innerHTML;
 
-      operator = ev.target.innerHTML;
+      state.operator = ev.target.innerHTML;
 
-      if (operator !== null) {
-        result.innerHTML = leftOperand + ev.target.innerHTML;
+      if (isOperatorPressed() !== null) {
+        result.innerHTML = state.leftOperand + ev.target.innerHTML;
       } else {
-        result.innerHTML = result.innerHTML + operator;
+        result.innerHTML = state.rightOperand + ev.target.innerHTML;
       }
     }
   });
+});
+
+document.getElementById("dot").addEventListener("click", dot => {
+  if (allowMoreOperations()) {
+    if (!isOperatorPressed() && !state.leftOperand.toString().includes(".")) {
+      state.leftOperand += ".";
+    } else if (isOperatorPressed() && !state.rightOperand.toString().includes(".")) {
+      state.rightOperand += ".";
+    }
+    result.innerHTML = result.innerHTML + dot.target.innerHTML;
+  }
 })
 
 equal.addEventListener("click", e => {
   if (allowMoreOperations()) {
-    calc(+leftOperand, operator, +rightOperand);
+    calc();
   }
 })
 
@@ -68,32 +78,31 @@ clearLastValue.addEventListener("click", e => {
 })
 
 clearAll.addEventListener("click", e => {
-  leftOperand = 0;
-  rightOperand = 0;
-  operator = null;
+  state.leftOperand = 0;
+  state.rightOperand = 0;
+  state.operator = null;
   result.innerHTML = " ";
 })
 
-function calc(leftOperand, operator, rightOperand) {
+function calc() {
   var res = 0;
-  switch (operator) {
+  switch (state.operator) {
     case "+":
-      res = leftOperand + rightOperand;
+      res = +state.leftOperand + +state.rightOperand;
       break;
     case "-":
-      res = leftOperand - rightOperand;
+      res = +state.leftOperand - +state.rightOperand;
       break;
     case "x":
-      res = leftOperand * rightOperand;
+      res = +state.leftOperand * +state.rightOperand;
       break;
     case "÷":
-      if (rightOperand == 0) {
+      if (state.rightOperand == 0) {
         res = "Error";
       } else {
-        res = leftOperand / rightOperand;
+        res = +state.leftOperand / +state.rightOperand;
       }
       break;
   }
-
   result.innerHTML = res;
 }
